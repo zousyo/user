@@ -72,6 +72,7 @@
         }
         function load(){
             document.getElementById('interactive').classList.add("center");
+            document.getElementById("modalArea").className = "modalBg";
       Quagga.init({
         inputStream: { type : 'LiveStream' },
           decoder: {
@@ -94,6 +95,7 @@
         document.getElementById('interactive').classList.remove("center");
         var button =document.getElementById('load');
         button.disabled=true;
+        document.getElementById("modalArea").className = "modalNoDisp";
         Quagga.stop();
         search();
         }else{}
@@ -102,12 +104,13 @@
     </script>
 <link rel="stylesheet" href="./standard.css">
     <style>
+      .drawingBuffer{
+        width:0px;
+        height: 0px;
+      }
         .center{
-          width: 100px;
-          height: 100px;
-          position: absolute;
-          top: 25%;
-          left: 25%;
+          width: 100%;
+          height: 100%;
         }
         input{
           border:none;
@@ -146,6 +149,65 @@
   border: 0;
     background: #ddd;
   }
+/* === モーダル非表示（初期） ============================== */
+.modalNoDisp {
+  display : none;
+}
+
+/* === モーダルバックグランド ============================== */
+.modalBg {
+  position   : fixed;
+  overflow   : hidden;
+  top        : 0;
+  right      : 0;
+  bottom     : 0;
+  left       : 0;
+  background : radial-gradient(circle at 50% 50%,
+                               rgba(0, 0, 0, 0.90),
+                               rgba(0, 0, 0, 0.70));
+  z-index    : 10;
+}
+
+/* === モーダルバックグランド：CLOSE時のアニメーション ===== */
+.modalBgClose {
+  bottom     : 100%;
+  animation  : bgCloseAnime 0.3s ease;
+}
+@keyframes bgCloseAnime {                     /* フェードイン */
+   0% { opacity: 1; bottom: 0 }
+ 100% { opacity: 0; bottom: 0 }
+}
+
+/* === モーダルウインド ==================================== */
+.modalBg .modalWindow {
+                             /* モーダルウインドを中心に表示 */
+  position      : absolute;
+  top           : 50%;
+  left          : 50%;
+  transform     : translate(-50%, -50%);
+  overflow   : hidden;
+  justify-content: center;
+           /* ↓モーダルウインドウの見た目：変更してください */
+  
+           background : radial-gradient(circle at 50% 50%,
+                               rgba(0, 0, 0, 0.90),
+                               rgba(0, 0, 0, 0.70));
+                               
+  z-index    : 10;
+  border        : none;
+  border-radius : 10px;
+  font-size     : 16pt;
+}
+
+/* === モーダルウインド：CLOSE時のアニメーション============ */
+.modalBgClose .modalWindow {
+  animation     : modalCloseAnime 0.3s ease;
+}
+@keyframes modalCloseAnime {                      /* 中心→下 */
+   0% { top : 50%  }
+ 100% { top : 150% }
+}
+</style>
     </style>
 
     <title>Document</title>
@@ -189,8 +251,11 @@
     </div>
     </div>
 
-    <div id="interactive" class="viewport"></div>
-      
+    <div id="modalArea" class="modalNoDisp">
+      <div class="modalWindow">
+       <div id="interactive" class="viewport"></div>
+      </div>
+    </div>   
         
 </body>
 </html>
