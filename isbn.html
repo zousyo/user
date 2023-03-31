@@ -68,9 +68,8 @@
 })
     }
         }
-    </script>
-    <script>
         function load(){
+            document.getElementById('interactive').style.display=block;
       Quagga.init({
         inputStream: { type : 'LiveStream' },
           decoder: {
@@ -93,6 +92,16 @@
       });
     }
     </script>
+    <style>
+        .viewport{
+        width:80%;
+        height:80%;
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%,-50%);
+        }
+    </style>
 
     <title>Document</title>
 </head>
