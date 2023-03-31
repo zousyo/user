@@ -40,7 +40,9 @@
         var categorie = document.getElementById('categories').value;
         var publish = document.getElementById('publishedDate').value;
         var descript = document.getElementById('description').value;
-
+        if(!isbn||!title||!author){
+          alert('未入力');
+        }else{
         values["isbn"]=isbn;
         values["title"]=title;
         values["author"]=author;
@@ -66,6 +68,7 @@
     }
 })
     }
+  }
         }
         function load(){
             document.getElementById('interactive').classList.add("center");
@@ -90,34 +93,87 @@
         document.getElementById('interactive').style.display="none";
         document.getElementById('interactive').classList.remove("center");
         var button =document.getElementById('load');
-        button.disabled = true;
+        button.disabled=true;
         Quagga.stop();
         search();
         }else{}
       });
     }
     </script>
+<link rel="stylesheet" href="./standard.css">
     <style>
         .center{
-        width:80%;
-        height:80%;
+          width: 100px;
+          height: 100px;
           position: absolute;
-          top: 50%;
-          left: 50%;
-          transform: translate(-50%,-50%);
+          top: 25%;
+          left: 25%;
         }
+        input{
+          border:none;
+          width: 95%;
+          outline:none;
+        }
+        #isbn{
+          width:400px;
+    padding: 10px 15px; /*ボックスを大きくする*/
+    font-size: 16px;
+    border-radius: 3px; /*ボックス角の丸み*/
+    border: 2px solid #ddd; /*枠線*/
+    box-sizing: border-box; /*横幅の解釈をpadding, borderまでとする*/
+        }
+        th,td {
+         border: solid 1px;              /* 枠線指定 */
+        }
+        table{
+          width: 500px;
+          margin-top:30px;
+          margin-bottom: 10px;
+          border-collapse:  collapse; 
+        }
+        #outer{
+          margin-top:30px ;
+    width: 100%;
+    display: flex;
+  justify-content: center;
+  }
+  #inner{
+    width: 500px;
+  }
+  #sbutton{
+    width: 90px;
+    padding:10px;
+  border: 0;
+    background: #ddd;
+  }
     </style>
 
     <title>Document</title>
 </head>
 <body>
-    <label for="isbn">isbn入力</label>
+  <header id="header">
+    <div class="wrapper">
+        <div id="head-left">
+          <a href="#" class="shadow">新規登録</a>
+          </div>
+      <nav>
+        <ul>
+          <li><a href="#">蔵書検索</a></li>
+          <li><a href="./password.html">パスワードの変更</a></li>
+          <li id="username"></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <div id="outer">
+    <div id="inner">
+    <label for="isbn">isbn入力</label><br>
     <input type="text" id="isbn">
-    <button type="button" onclick="search()">検索</button>
+    <button type="button" onclick="search()" id="sbutton">検索</button>
     <div id="output"></div>
-    <table border="1">
+    <table>
         <tr>
-            <td>isbn</td><td><input type="number" id="outisbn"></td>
+            <td>isbn</td><td><input type="text" id="outisbn"></td>
         </tr>
         <tr>
             <td>書名</td><td><input type="text"id="title"></td>
@@ -137,6 +193,8 @@
     </table>
     <button type="button" onclick="sub()">送信</button>
     <button type="button" onclick="load()" id="load">ISBN読み取り</button>
+    </div>
+    </div>
 
     <div id="interactive" class="viewport"></div>
       
