@@ -53,6 +53,7 @@
 
         var confirm =window.confirm("送信します");
     if(confirm){
+      document.getElementById("runArea").className = 'runBg';
         var url =durl+'?page=add&name=master&mail=master&values='+JSON.stringify(values);
         console.log(url);
         fetch(url , {
@@ -65,6 +66,7 @@
         location.reload();
     }else if(text=='already'){
         alert('既に登録されています');
+        location.reload();
     }
 })
     }
@@ -210,7 +212,7 @@
 </style>
     </style>
 
-    <title>Document</title>
+    <title>新規登録</title>
 </head>
 <body>
   <header id="header">
@@ -257,5 +259,13 @@
       </div>
     </div>   
         
+    <!-- 実行中ウインドウのエリア -->
+<div id="runArea" class="runNoDisp">
+  <div class="runWindow"> <!-- ここがウインドウとなります -->
+    <p>実行中<br>しばらくお待ちください</p>
+    <div class="bar"></div>
+  </div>
+</div>
+
 </body>
 </html>
