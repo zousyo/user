@@ -61,6 +61,10 @@
     if(text=='success'){
         alert('登録されました');
         location.reload();
+    }else if(text=='already'){
+        alert('既に登録されています');
+    }else{
+        console.log(text);
     }
 })
     }
