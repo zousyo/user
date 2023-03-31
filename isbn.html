@@ -63,8 +63,6 @@
         location.reload();
     }else if(text=='already'){
         alert('既に登録されています');
-    }else{
-        console.log(text);
     }
 })
     }
@@ -93,6 +91,7 @@
         var button =document.getElementById('load');
         button.disabled = true;
         button.value="再読み込みしてください";
+        search();
       });
     }
     </script>
