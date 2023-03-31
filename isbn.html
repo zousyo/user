@@ -17,7 +17,7 @@
     var resdiv = document.getElementById('output').innerHTML;
     var data = JSON.parse(text);
     console.log(data);
-    if(!data.volumeInfo){
+    if(!data.items){
         alert('該当書誌がありません');
         document.getElementById('outisbn').value=isbn;
     }else{
@@ -70,27 +70,30 @@
         }
     </script>
     <script>
-        function read(){
-        Quagga.init({
-      inputStream: { type : 'LiveStream' },
-        decoder: {
-          readers: [{
-            format: 'ean_reader',
-            config: {}
-          }]
-        }
-      }, (err) => {
-        if(!err) {
-          Quagga.start();
-        }
+        function load(){
+      Quagga.init({
+        inputStream: { type : 'LiveStream' },
+          decoder: {
+            readers: [{
+              format: 'ean_reader',
+              config: {}
+            }]
+          }
+        }, (err) => {
+          if(!err) {
+            Quagga.start();
+          }
+        });
+  
+      Quagga.onDetected((result) => {
+        var code = result.codeResult.code;
+        document.getElementById('isbn').value=code;
+        document.getElementById('interactive').style.display="none";
+        alert(code);
       });
-
-    Quagga.onDetected((result) => {
-      var code = result.codeResult.code;
-      alert(code);
-    });
-}
+    }
     </script>
+
     <title>Document</title>
 </head>
 <body>
@@ -125,6 +128,10 @@
         </tr>
     </table>
     <button type="button" onclick="sub()">送信</button>
-    <button type="button" onclick="read()">ISBN読み取り</button>
+    <button type="button" onclick="load()">ISBN読み取り</button>
+
+    <div id="interactive" class="viewport"></div>
+      
+        
 </body>
 </html>
