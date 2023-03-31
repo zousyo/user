@@ -85,7 +85,6 @@
   
       Quagga.onDetected((result) => {
         var code = result.codeResult.code;
-        alert(code[0])
         if(code[0]==9){
         document.getElementById('isbn').value=code;
         document.getElementById('interactive').style.display="none";
