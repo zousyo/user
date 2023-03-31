@@ -1,105 +1,7 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <style type="text/css">
-  .shadow {
-    display     : inline-block;
-    color       : #990000;            /* 文字の色 */
-    font-size   : 21pt;               /* 文字のサイズ */
-    text-shadow : 9px 7px 5px rgba(127, 70, 0, 0.91);  /* 文字の影 */
-    text-decoration:none;
-  }
-  #header ul {
-    float: right;
-    margin: 28px 0;
-    font-size: 0.9rem;
-    margin-right: 40px;
-    
-  }
-  #header ul li {
-    list-style:none;
-    float: left;
-    margin-right: 40px;
-    
-  }
-  #header ul li  a{
-    text-decoration: none;
-    color:darkblue;
-  }
-  #header {
-    width: 100%;
-    height: 70px;
-    border-bottom: 4px solid #990000;
-  }
-  #head-left{
-    float: left;
-    margin-left: 10px;
-    margin-top: 10px;
-    width:200px;
-  }
-  .search label{
-    font-size: large;
-  }
-  #search-word{
-    width:92%;
-    padding: 10px 15px; /*ボックスを大きくする*/
-    font-size: 16px;
-    border-radius: 3px; /*ボックス角の丸み*/
-    border: 2px solid #ddd; /*枠線*/
-    box-sizing: border-box; /*横幅の解釈をpadding, borderまでとする*/
-  }
-  .search-button{
-    padding:10px;
-  border: 0;
-    background: #ddd;
-  }
-  #outer{
-    width: 100%;
-    display: flex;
-  justify-content: center;
-  }
-  #inner{
-    width: 700px;
-  }
-  .lending{
-    margin-top:30px;
-    border-bottom:thin solid gray ;
-  }
-          .content{
-              background-color: white;
-              width: 100%;
-              height:90px;
-              border: thin solid gray;
-              border-bottom: none;
-              position: relative;
-          }
-          .title{
-            margin-bottom: 0%;
-            width:90%;
-            cursor: pointer;
-            margin-left: 10px;
-          }
-          .title:hover{
-    text-decoration:underline;
-          }
-          .contributer{
-            float: left;
-            margin-left: 20px;
-          }
-          .deadline{
-            float: right;
-            margin-right: 10px;
-          }
-  </style>
-  <script>
-
-  </script>
-  <script>
-    function search(){
-      var word = document.getElementById('search-word').value;
-      alert(word);
-    }
-  </script>
+<link rel="stylesheet" href="./standard.css">
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -129,42 +31,18 @@
      </div>
 
      <div class="lending">
-      <p>貸出中2冊</p>
-      <div id="out">
-        <div class="content">
-          <p class="title" id="isbn">タイトル</p>
-          <p class="contributer">著者</p>
-          <p class="deadline">返却期限</p>
-        </div>
-        <div class="content">
-          <p class="title" id="isbn">タイトル</p>
-          <p class="contributer">著者</p>
-          <p class="deadline">返却期限</p>
-        </div>
+      <p id="lend-p">貸出中冊</p>
+      <div id="lend-div">
       </div>
      </div>
 
      <div class="lending">
-      <p>予約中3冊</p>
-      <div id="out">
-        <div class="content">
-          <p class="title" id="isbn">タイトル</p>
-          <p class="contributer">著者</p>
-          <p class="deadline">予約日</p>
-        </div>
-        <div class="content">
-          <p class="title" id="isbn">タイトル</p>
-          <p class="contributer">著者</p>
-          <p class="deadline">予約日</p>
-        </div>
-        <div class="content">
-          <p class="title" id="isbn">タイトル</p>
-          <p class="contributer">著者</p>
-          <p class="deadline">予約日</p>
-        </div>
+      <p id="reserve-p">予約中3冊</p>
+      <div id="reserve-div">
       </div>
      </div>
     </div>
   </div>
 </body>
+<script src="./script.js"></script>
 </html>
