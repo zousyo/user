@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="text/javascript" src="https://serratus.github.io/quaggaJS/examples/js/quagga.min.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <body>
+        <div id="interactive" class="viewport"></div>
+      
+        <script>
+          Quagga.init({
+            inputStream: { type : 'LiveStream' },
+              decoder: {
+                readers: [{
+                  format: 'ean_reader',
+                  config: {}
+                }]
+              }
+            }, (err) => {
+              if(!err) {
+                Quagga.start();
+              }
+            });
+      
+          Quagga.onDetected((result) => {
+            var code = result.codeResult.code;
+            alert(code);
+          });
+        </script>
+      </body>
+</body>
+</html>
