@@ -89,7 +89,9 @@
         document.getElementById('isbn').value=code;
         document.getElementById('interactive').style.display="none";
         document.getElementById('interactive').classList.remove("center");
-        alert(code);
+        var button =document.getElementById('load');
+        button.disabled = true;
+        button.value="再読み込みしてください";
       });
     }
     </script>
@@ -138,7 +140,7 @@
         </tr>
     </table>
     <button type="button" onclick="sub()">送信</button>
-    <button type="button" onclick="load()">ISBN読み取り</button>
+    <button type="button" onclick="load()" id="load">ISBN読み取り</button>
 
     <div id="interactive" class="viewport"></div>
       
