@@ -27,7 +27,19 @@
         document.getElementById('authors').value=bookInfo.authors;
         document.getElementById('categories').value=bookInfo.categories;
         document.getElementById('publishedDate').value=bookInfo.publishedDate;
+        document.getElementById('VolumeLink').value=bookInfo.canonicalVolumeLink;
         document.getElementById('description').value=bookInfo.description;
+
+        if(!bookInfo.imageLinks){
+            document.getElementById('imageLinks').value='undefined';
+        }else{
+        var images = Object.keys(bookInfo.imageLinks);
+        console.log(images[0]);
+        for(i=0;i<images.length;i++){
+            document.getElementById('imageLinks').value=bookInfo.imageLinks[images[i]];
+            image(bookInfo.imageLinks[images[i]]);
+        }
+    }
     }
 })
         }
@@ -40,6 +52,8 @@
         var categorie = document.getElementById('categories').value;
         var publish = document.getElementById('publishedDate').value;
         var descript = document.getElementById('description').value;
+        var volumeurl = document.getElementById('VolumeLink').value;
+        var imageurl = document.getElementById('imageLinks').value;
         if(!isbn||!title||!author){
           alert('未入力');
         }else{
@@ -49,12 +63,25 @@
         values["categorie"]=categorie;
         values["publish"]=publish;
         values["descript"]=descript;
+        values["volumeurl"]=volumeurl;
+        values["imageLinks"]=imageurl;
         console.log(values);
+
+        var str = JSON.stringify(values);
+var result = str.replace('&', '＆');
+ 
+//「str」と「result」が同じ文字列になるまで繰り返す
+while(result !== str) {
+ 
+    str = str.replace('&', '＆');
+    result = result.replace('&', '＆');
+ 
+}
 
         var confirm =window.confirm("送信します");
     if(confirm){
       document.getElementById("runArea").className = 'runBg';
-        var url =durl+'?page=add&name=master&mail=master&values='+JSON.stringify(values);
+        var url =durl+'?page=add&name=master&mail=master&values='+result;
         console.log(url);
         fetch(url , {
   method: "GET",
@@ -113,6 +140,12 @@
         }else{}
       });
     }
+    function image(url){
+      if(!url){
+        url="./unbook.png";
+      }
+      document.getElementById('imageframe').src=url;
+    }
     </script>
 <link rel="stylesheet" href="./standard.css">
     <style>
@@ -160,6 +193,10 @@
     padding:10px;
   border: 0;
     background: #ddd;
+  }
+  #imageframe{
+    margin-top: 30px;
+    width: 100%;
   }
 /* === モーダル非表示（初期） ============================== */
 .modalNoDisp {
@@ -255,12 +292,21 @@
         <td>発行日</td><td><input type="text" id="publishedDate"></td>
         </tr>
         <tr>
+          <td>url</td><td><input type="url" id="VolumeLink"></td>
+        </tr>
+        <tr>
         <td>説明</td><td><input type="text" id="description"></td>
+        </tr>
+        <tr>
+          <td>画像url</td><td><input type="text" id="imageLinks" onchange="image(this.value)"></td>
         </tr>
     </table>
     <div id="btns">
     <button type="button" onclick="sub()">送信</button>
     <button type="button" onclick="load()" id="load">ISBN読み取り</button>
+  </div>
+  <div>
+    <img src="./unbook.png" id="imageframe">
   </div>
   </div>
     </div>
