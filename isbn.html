@@ -33,12 +33,18 @@
         if(!bookInfo.imageLinks){
             document.getElementById('imageLinks').value='undefined';
         }else{
+        if(!bookInfo.imageLinks.thumbnail){
         var images = Object.keys(bookInfo.imageLinks);
         console.log(images[0]);
         for(i=0;i<images.length;i++){
             document.getElementById('imageLinks').value=bookInfo.imageLinks[images[i]];
             image(bookInfo.imageLinks[images[i]]);
         }
+      }else{
+        console.log("thumbnail")
+            document.getElementById('imageLinks').value=bookInfo.imageLinks.thumbnail;
+            image(bookInfo.imageLinks.thumbnail);
+      }
     }
     }
 })
@@ -114,26 +120,13 @@ while(result !== str) {
           if(!err) {
             Quagga.start();
           }
+            Quagga.start();
         });
   
       Quagga.onDetected((result) => {
         var code = result.codeResult.code;
         if(code[0]==9){
         document.getElementById('isbn').value=code;
-        document.getElementById('interactive').style.display="none";
-        document.getElementById('interactive').classList.remove("center");
-        var button =document.getElementById('load');
-        button.disabled=true;
-        var check = document.getElementById('rel');
-        if(!check){
-        var newbtn = document.createElement('button');
-        newbtn.setAttribute('onclick', 'load()');
-        newbtn.id="rel";
-        newbtn.innerHTML="再読み込み";
-        document.getElementById('btns').appendChild(newbtn);
-        }else{
-          check.remove();
-        }
         document.getElementById("modalArea").className = "modalNoDisp";
         Quagga.stop();
         search();
@@ -248,14 +241,6 @@ while(result !== str) {
   font-size     : 16pt;
 }
 
-/* === モーダルウインド：CLOSE時のアニメーション============ */
-.modalBgClose .modalWindow {
-  animation     : modalCloseAnime 0.3s ease;
-}
-@keyframes modalCloseAnime {                      /* 中心→下 */
-   0% { top : 50%  }
- 100% { top : 150% }
-}
 </style>
     </style>
 
