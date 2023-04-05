@@ -240,7 +240,15 @@ while(result !== str) {
   border-radius : 10px;
   font-size     : 16pt;
 }
-
+.c-button{
+  font-size:25px;
+}
+.load{
+  background-color: rgb(192, 85, 107);
+}
+.load:focus{
+  border-color: rgb(192, 85, 107);
+}
 </style>
     </style>
 
@@ -287,8 +295,8 @@ while(result !== str) {
         </tr>
     </table>
     <div id="btns">
-    <button type="button" onclick="sub()">送信</button>
-    <button type="button" onclick="load()" id="load">ISBN読み取り</button>
+    <button type="button" class="c-button" onclick="sub()">送信</button>
+    <button type="button" class="c-button load" onclick="load()" id="load">ISBN読み取り</button>
   </div>
   <div>
     <img src="./unbook.png" id="imageframe">
