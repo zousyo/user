@@ -6,6 +6,51 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>マイページ</title>
+  <style>
+    #my_barcode{
+      width:230px;
+      text-align: center;
+      margin-top: 20px;
+    }
+    #modalinner{
+      width: 100%;
+    display: flex;
+  justify-content: center;
+    }
+    
+
+/* === モーダルバックグランド ============================== */
+.modalBg {
+  position   : fixed;
+  overflow   : hidden;
+  top        : 0;
+  right      : 0;
+  bottom     : 0;
+  left       : 0;
+  background : radial-gradient(circle at 50% 50%,
+                               #ffffff,
+                               rgba(255, 255, 255, 0.80));
+  z-index    : 10;
+}
+
+/* === モーダルウインド ==================================== */
+.modalBg .modalWindow {
+                             /* モーダルウインドを中心に表示 */
+  position      : absolute;
+  top           : 50%;
+  left          : 50%;
+  transform     : translate(-50%, -50%);
+  z-index       : 11;
+           /* ↓モーダルウインドウの見た目：変更してください */
+  width         : 300px;
+  min-height    : 220px;
+  background    : #fff;
+  border        : 3px solid #35557f;
+  border-radius : 10px;
+  font-size     : 16pt;
+  text-align    : center;
+}
+  </style>
 </head>
 <body>
   <header id="header">
@@ -41,8 +86,28 @@
       <div id="reserve-div">
       </div>
      </div>
+     <button id="btn" onclick="createcode()">利用者コードを表示</button>
+    </div>
+  </div>
+  <div id="modalArea" class="modalNoDisp">
+    <div class="modalWindow">
+      <div id="modalinner">
+      <div id="my_barcode"><div></div></div>
+      </div>
+      <p><input type="button" value="閉じる" onclick="modalClose()"></p>
     </div>
   </div>
 </body>
+<script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/gh/mtaketani113/jquery-barcode@master/jquery-barcode.js"></script>
+<script>
+  function createcode(){
+      var value = Number(localStorage.getItem('usercode'))*100;
+      var num = String(value).substring(0, 12);
+      console.log(num);
+    document.getElementById("modalArea").className = "modalBg";
+  $("#my_barcode div").barcode(num, "ean13",{barWidth:2});// バーコードを表示
+  }
+  </script>
 <script src="./script.js"></script>
 </html>

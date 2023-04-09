@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <link rel="stylesheet" href="./standard.css">
+    <style>
+        #inner{
+            width:300px;
+        }
+
+        .selectbox-003 {
+    display: inline-flex;
+    align-items: center;
+    position: relative;
+}
+
+.selectbox-003::after {
+    position: absolute;
+    right: 15px;
+    width: 10px;
+    height: 7px;
+    background-color: #535353;
+    clip-path: polygon(0 0, 100% 0, 50% 100%);
+    content: '';
+    pointer-events: none;
+}
+
+.selectbox-003 select {
+    appearance: none;
+    width: 300px;
+    height: 2.8em;
+    padding: .4em calc(.8em + 30px) .4em .8em;
+    border: 1px solid #cccccc;
+    border-radius: 3px;
+    background-color: #fff;
+    color: #333333;
+    font-size: 1em;
+    cursor: pointer;
+}
+        .c-button{
+            margin-left: 0;
+            width: 300px;
+            height: 100px;
+        }
+        .none{
+            display: none;
+        }
+        #logintype{
+            float: right;
+            border: none;
+            margin-top: 20px;
+        }
+        #inner{
+            margin-top: 20px;
+        }
+    </style>
+    <script>
+        function logintype(){
+            var div = document.getElementById('none');
+            div.classList.remove('none');
+            div.style.marginTop="30px";
+            var button = document.getElementById('logintype');
+            button.classList.add('none');
+        }
+        function login(){
+            var typeselect = document.getElementById('type');
+            var num = typeselect.selectedIndex;
+            var role = typeselect.options[num].value;
+            var username = document.getElementById('username').value;
+            var password = document.getElementById('password').value;
+            var values = {"role":role,"username":username,"password":password};
+            console.log(values);
+            const url = "https://script.google.com/macros/s/AKfycbxvS9JmRMQXRle4fh_tbYzd3_nOwVRadU2Ab0lj23sBtJkChT38rnqpMIDqVjgmN18S/exec";
+            if(role=="admin"){
+            localStorage.setItem('master-name',username);
+            localStorage.setItem('master-pas',password);
+            }
+            localStorage.setItem('role',role);
+            localStorage.setItem('username',username);
+            localStorage.setItem('password',password);
+            var index = url+'?page=login&userinfo='+JSON.stringify(values);
+    document.getElementById("runArea").className = 'runBg';
+            console.log(index);
+            fetch(index,{
+        method:"GET",
+      }).then(response => response.text())
+        .then(text => {
+            if(text=='success'){
+            localStorage.setItem('username',username);
+            localStorage.setItem('password',password);
+            if(role=="admin"){
+                location.href="./admin.html";
+            }else{
+            location.href='./index.html';
+            }
+            }else{
+                alert('ログインできませんでした');
+                location.reload();
+            }
+        });
+
+        }
+    </script>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ログイン</title>
+</head>
+<body>
+  <header id="header">
+    <div class="wrapper">
+        <div id="head-left">
+          <a href="#" class="shadow">ログイン</a>
+          </div>
+      <nav>
+        <ul>
+          <li><a href="./index.html">トップページに戻る</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+    <div id="outer">
+        <div id="inner">
+            <label for="username">ユーザー名を入力</label><br>
+            <input type="text" class="text-input" id="username"><br>
+            <label for="password">パスワードを入力</label><br>
+            <input type="text" class="text-input" id="password"><br>
+            <button type="button" onclick="logintype()" id="logintype">role</button>
+            <div class="none" id="none">
+            <label for="select">ロールの選択</label><br>
+            <label class="selectbox-003">
+                <select id="type">
+                    <option value="user" selected>利用者</option>
+                    <option value="admin">管理者</option>
+                </select>
+            </label>
+            </div>
+            <button type="button" class="c-button" onclick="login()">ログイン</button>
+        </div>
+    </div>    <!-- 実行中ウインドウのエリア -->
+    <div id="runArea" class="runNoDisp">
+      <div class="runWindow"> <!-- ここがウインドウとなります -->
+        <p>実行中<br>しばらくお待ちください</p>
+        <div class="bar"></div>
+      </div>
+    </div>
+</body>
+</html>

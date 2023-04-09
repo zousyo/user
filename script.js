@@ -2,9 +2,26 @@ function search(){
     var word = document.getElementById('search-word').value;
     alert(word);
   }
+
+  //**window onload */
+      const username = localStorage.getItem('username');
+      const password = localStorage.getItem('password');
+      const role = localStorage.getItem('role');
+      if(!username||!password||!role){
+        location.href="./login.html";
+      }
+      const userinfo = JSON.stringify({'username':username,'password':password,'role':role});
+  const url = "https://script.google.com/macros/s/AKfycbxvS9JmRMQXRle4fh_tbYzd3_nOwVRadU2Ab0lj23sBtJkChT38rnqpMIDqVjgmN18S/exec";
+  var furl =url+'?page=index&userinfo='+userinfo;
+        console.log(furl);
+        fetch(furl , {
+  method: "GET",
+}).then(response => response.text())
+.then(text => {
+  var res = JSON.parse(text);
+  console.log(res);
   var lendp = document.getElementById('lend-p');
   var lend = document.getElementById("lend-div");
-  var res = [[['貸出中書誌１','著者',1423,'期限'],['貸出中書誌２','著者',1321,'期限']],[['予約中書誌１','著者','isbn','予約日'],['予約中書誌２','著者','isbn','予約日'],['予約中書誌３','著者','isbn','予約日']]];
   for(i=0;i<res[0].length;i++){
 
     let content = document.createElement('div');
@@ -61,6 +78,8 @@ function search(){
     reserve.appendChild(rcontent);
   }
   reservep.innerHTML='予約中'+res[1].length+'冊';
+  localStorage.setItem('usercode',res[2]);
+})
 
   function cllend(isbn){
     alert(isbn);
@@ -68,3 +87,7 @@ function search(){
   function clreserve(isbn){
     alert(isbn);
   }
+
+  function modalClose(){
+     document.getElementById("modalArea").className = "modalNoDisp";
+   }
