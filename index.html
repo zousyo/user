@@ -50,6 +50,13 @@
   font-size     : 16pt;
   text-align    : center;
 }
+.c-button{
+  margin-left: 0;
+  margin-top:30px;
+}
+#closeb{
+  width:200px;
+}
   </style>
 </head>
 <body>
@@ -71,22 +78,22 @@
     <div id="inner">
      <div style="margin-top: 30px;">
       <label for="search-word">蔵書検索</label><br>
-      <input type="text" id="search-word">
+      <input type="text" id="search-word" onchange="search()">
       <button onclick="search()" class="search-button">検索</button>
      </div>
 
      <div class="lending">
-      <p id="lend-p">貸出中冊</p>
+      <p id="lend-p">貸出中</p>
       <div id="lend-div">
       </div>
      </div>
 
      <div class="lending">
-      <p id="reserve-p">予約中3冊</p>
+      <p id="reserve-p">予約中</p>
       <div id="reserve-div">
       </div>
      </div>
-     <button id="btn" onclick="createcode()">利用者コードを表示</button>
+     <button id="btn" onclick="createcode()" class="c-button">利用者コード</button>
     </div>
   </div>
   <div id="modalArea" class="modalNoDisp">
@@ -94,7 +101,7 @@
       <div id="modalinner">
       <div id="my_barcode"><div></div></div>
       </div>
-      <p><input type="button" value="閉じる" onclick="modalClose()"></p>
+      <p><input type="button" value="閉じる" onclick="modalClose()" class="c-button" id="closeb"></p>
     </div>
   </div>
 </body>
@@ -102,7 +109,7 @@
 	<script src="https://cdn.jsdelivr.net/gh/mtaketani113/jquery-barcode@master/jquery-barcode.js"></script>
 <script>
   function createcode(){
-      var value = Number(localStorage.getItem('usercode'))*100;
+      var value = Number(localStorage.getItem('usercode'))*10;
       var num = String(value).substring(0, 12);
       console.log(num);
     document.getElementById("modalArea").className = "modalBg";

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./standard.css">
+    <title>検索結果</title>
+</head>
+<body>
+    <header id="header">
+        <div class="wrapper">
+            <div id="head-left">
+              <a href="./index.html" class="shadow">図書検索</a>
+              </div>
+          <nav>
+            <ul>
+              <li><a href="./password.html">パスワードの変更</a></li>
+              <li id="username"></li>
+            </ul>
+          </nav>
+        </div>
+      </header>
+      <div id="outer">
+        <div id="inner">
+            <div style="margin-top: 30px;">
+                <label for="search-word">蔵書検索</label><br>
+                <input type="text" id="search-word">
+                <button onclick="search()" class="search-button">検索</button>
+               </div>
+
+            <div class="lending">
+                <p id="search-p">検索中</p>
+                <div id="search-div">
+                </div>
+               </div>
+        </div>
+      </div>
+      <script src="./search.js"></script>
+</body>
+</html>

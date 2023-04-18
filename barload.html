@@ -65,6 +65,7 @@
           if(!err) {
             Quagga.start();
           }
+            Quagga.start();
         });
   
       Quagga.onDetected((result) => {
@@ -72,10 +73,7 @@
         var confirm = window.confirm(code);
         if(confirm){
         document.getElementById('isbn').value=code;
-        document.getElementById('interactive').style.display="none";
-        document.getElementById('interactive').classList.remove("center");
         var button =document.getElementById('load');
-        button.disabled=true;
         var check = document.getElementById('rel');
         document.getElementById("modalArea").className = "modalNoDisp";
         Quagga.stop();

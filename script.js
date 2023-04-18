@@ -1,6 +1,10 @@
 function search(){
     var word = document.getElementById('search-word').value;
-    alert(word);
+    if(!word){
+      alert('入力してください');
+    }else{
+      location.href="./search.html?word="+word;
+    }
   }
 
   //**window onload */
@@ -10,6 +14,7 @@ function search(){
       if(!username||!password||!role){
         location.href="./login.html";
       }
+      document.getElementById('username').innerText = username;
       const userinfo = JSON.stringify({'username':username,'password':password,'role':role});
   const url = "https://script.google.com/macros/s/AKfycbxvS9JmRMQXRle4fh_tbYzd3_nOwVRadU2Ab0lj23sBtJkChT38rnqpMIDqVjgmN18S/exec";
   var furl =url+'?page=index&userinfo='+userinfo;
@@ -40,7 +45,7 @@ function search(){
     contributer.innerText = res[0][i][1];
     deadline.innerText = res[0][i][3];
 
-    title.setAttribute('onclick', 'cllend(this.id)');
+    title.setAttribute('onclick', 'book(this.id)');
 
     content.appendChild(title);
     content.appendChild(contributer);
@@ -70,7 +75,7 @@ function search(){
     contributer.innerText = res[1][i][1];
     deadline.innerText = res[1][i][3];
 
-    title.setAttribute('onclick', 'clreserve(this.id)');
+    title.setAttribute('onclick', 'book(this.id)');
 
     rcontent.appendChild(title);
     rcontent.appendChild(contributer);
@@ -81,11 +86,8 @@ function search(){
   localStorage.setItem('usercode',res[2]);
 })
 
-  function cllend(isbn){
-    alert(isbn);
-  }
-  function clreserve(isbn){
-    alert(isbn);
+  function book(isbn){
+    location.href = "./bookinfo.html?isbn="+isbn;
   }
 
   function modalClose(){

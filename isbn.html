@@ -6,6 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script type="text/javascript" src="https://serratus.github.io/quaggaJS/examples/js/quagga.min.js"></script>
     <script>
+      const username = localStorage.getItem('username');
+      const password = localStorage.getItem('password');
+      const role = localStorage.getItem('role');
+      if(!username||!password||!role){
+        location.href="./login.html";
+      }
+      const userinfo = JSON.stringify({'username':username,'password':password,'role':role});
         const durl = "https://script.google.com/macros/s/AKfycbxvS9JmRMQXRle4fh_tbYzd3_nOwVRadU2Ab0lj23sBtJkChT38rnqpMIDqVjgmN18S/exec";
         function search(){
         var isbn = document.getElementById('isbn').value;
@@ -87,7 +94,7 @@ while(result !== str) {
         var confirm =window.confirm("送信します");
     if(confirm){
       document.getElementById("runArea").className = 'runBg';
-        var url =durl+'?page=add&name=master&mail=master&values='+result;
+        var url =durl+'?page=add&userinfo='+userinfo+'&values='+result;
         console.log(url);
         fetch(url , {
   method: "GET",
@@ -258,7 +265,7 @@ while(result !== str) {
   <header id="header">
     <div class="wrapper">
         <div id="head-left">
-          <a href="#" class="shadow">新規登録</a>
+          <a href="./admin.html" class="shadow">新規登録</a>
           </div>
     </div>
   </header>

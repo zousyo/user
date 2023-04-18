@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>メールアドレス認証ページ</title>
+    <link rel="stylesheet" href="./standard.css">
+    <style>
+#center{
+            position: absolute;
+   top: 50%;
+   left: 50%;
+   transform: translate(-50%,-50%);
+        }
+        .register{
+            min-width:100px;
+            height: 50px;
+            font-size: large;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <header id="header">
+      <div class="wrapper">
+          <div id="head-left">
+            <a href="#" class="shadow">認証ページ</a>
+          </div>
+      </div>
+    </header>
+    <div>
+        <p>メールアドレス登録の認証ページです。</p>
+    </div>
+
+    <div id="center">
+        <span class="loading" id="loading"><span>読</span><span>み</span><span>込</span><span>み</span><span>中</span></span>
+      </div>
+    <div id="runArea" class="runNoDisp">
+        <div class="runWindow"> <!-- ここがウインドウとなります -->
+          <p>実行中<br>しばらくお待ちください</p>
+          <div class="bar"></div>
+        </div>
+      </div>
+      <script>
+        var query = location.search;
+        var value = query.split('=');
+          var data = decodeURIComponent(value[1]);
+        const url = "https://script.google.com/macros/s/AKfycbxvS9JmRMQXRle4fh_tbYzd3_nOwVRadU2Ab0lj23sBtJkChT38rnqpMIDqVjgmN18S/exec";
+          var furl =url+'?page=cmail&userinfo={"name":"name","mail":"mail"}&cmail='+data;
+                console.log(furl);
+                fetch(furl , {
+          method: "GET",
+        }).then(response => response.text())
+        .then(text => {
+          var doc = document.getElementById('center');
+          var p = document.createElement('p');
+              p.innerHTML=text;
+              p.id = "username";
+          var n = document.createElement('p');
+              n.innerHTML = "名前";
+          var l = document.createElement('p');
+              l.innerHTML = "パスワードを設定してください";
+          var i = document.createElement('input');
+              i.type ="text";
+              i.id = "pas";
+          var b = document.createElement('button');
+              b.innerText = "設定";
+              b.setAttribute('onclick', 'sub()');
+              doc.appendChild(n);
+              doc.appendChild(p);
+              doc.appendChild(l);
+              doc.appendChild(i);
+              doc.appendChild(b);
+              document.getElementById('loading').remove();
+        })
+        function sub(){
+          var password = document.getElementById('pas').value;
+          if(!password){
+            alert('パスワードを入力してください');
+          }else{
+      document.getElementById("runArea").className = 'runBg';
+          var surl =url+'?page=rmail&userinfo={"name":"name","mail":"mail"}&cmail='+data+'&pass='+password;
+          console.log(surl);
+                fetch(surl , {
+          method: "GET",
+        }).then(response => response.text())
+        .then(text => {
+          if(text=="success"){
+            alert('登録が完了しました');
+            var username = document.getElementById('username').innerHTML;
+            localStorage.setItem('username',username);
+            localStorage.setItem('password',password);
+            location.href ="./index.html";
+          }else{
+            alert('失敗しました');
+          }
+        })
+        }
+      }
+        </script>
+</body>
+</html>

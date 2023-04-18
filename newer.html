@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>利用者登録</title>
+    <link rel="stylesheet" href="./standard.css">
+    <style>
+        #inner{
+            width: 300px;
+        }
+        .c-button{
+            margin-left: 0;
+            width: 300px;
+            height: 100px;
+        }
+        #outer{
+            margin-top: 30px;
+        }
+    </style>
+    <script>
+                const username = localStorage.getItem('username');
+const password = localStorage.getItem('password');
+const mastername = localStorage.getItem('master-name');
+const masterpass = localStorage.getItem('master-pas');
+localStorage.setItem('lend',"");
+const role = localStorage.getItem('role');
+if(!username||!password||!role||!mastername||!masterpass){
+  location.href="./login.html";
+}
+      var query = location.search;
+      var value = query.split('=');
+      var key = decodeURIComponent(value[1]);
+const userinfo = JSON.stringify({'username':username,'password':password,'role':role});
+  const url = "https://script.google.com/macros/s/AKfycbxvS9JmRMQXRle4fh_tbYzd3_nOwVRadU2Ab0lj23sBtJkChT38rnqpMIDqVjgmN18S/exec";
+
+        function sub(){
+            var newmail = document.getElementById('mail').value;
+            var newname = document.getElementById('name').value;
+            var newerinfo = JSON.stringify({"name":newname,"mail":newmail});
+            var furl =url+'?page=newer&userinfo='+userinfo+'&newer='+newerinfo;
+        console.log(furl);
+        fetch(furl , {
+  method: "GET",
+}).then(response => response.text())
+.then(text => {
+    if(text=="success"){
+        alert('登録が完了しました');
+        location.href = "./admin.html";
+    }
+})
+        }
+    </script>
+</head>
+<body>
+    <header id="header">
+        <div class="wrapper">
+            <div id="head-left">
+              <a href="#" class="shadow">利用者登録</a>
+              </div>
+          <nav>
+            <ul>
+              <li><a href="./isbn.html">新規登録</a></li>
+              <li><a href="./admin.html">管理者トップ</a></li>
+              <li id="username"></li>
+            </ul>
+          </nav>
+        </div>
+      </header>
+    <div id="outer">
+        <div id="inner">
+            <label for="user">ユーザー名（仮）を入力</label><br>
+            <input type="text" class="text-input" id="name"><br>
+            <label for="mail">メールアドレスを入力</label><br>
+            <input type="text" id="mail" class="text-input"><br>
+            <button class="c-button" onclick="sub()">登録</button>
+        </div>
+    </div>
+    <div id="runArea" class="runNoDisp">
+        <div class="runWindow"> <!-- ここがウインドウとなります -->
+          <p>実行中<br>しばらくお待ちください</p>
+          <div class="bar"></div>
+        </div>
+      </div>
+</body>
+</html>

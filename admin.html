@@ -50,45 +50,82 @@
   font-size     : 16pt;
 }
 
+/***/
+.modalNoDisp2 {
+  display : none;
+}
+
+/* === モーダルバックグランド ============================== */
+.modalBg2 {
+  position   : fixed;
+  overflow   : hidden;
+  top        : 0;
+  right      : 0;
+  bottom     : 0;
+  left       : 0;
+  background : radial-gradient(circle at 50% 50%,
+                               rgba(0, 0, 0, 0.90),
+                               rgba(0, 0, 0, 0.70));
+  z-index    : 10;
+}
+
+/* === モーダルバックグランド：OPEN時のアニメーション ====== */
+.modalBgOpen2 {
+  animation  : bgOpenAnime 0.3s ease;
+}
+@keyframes bgOpenAnime {                     /* フェードイン */
+   0% { opacity: 0 }
+ 100% { opacity: 1 }
+}
+
+/* === モーダルバックグランド：CLOSE時のアニメーション ===== */
+.modalBgClose2 {
+  bottom     : 100%;
+  animation  : bgCloseAnime 0.3s ease;
+}
+@keyframes bgCloseAnime {                     /* フェードイン */
+   0% { opacity: 1; bottom: 0 }
+ 100% { opacity: 0; bottom: 0 }
+}
+
+/* === モーダルウインド ==================================== */
+.modalBg2 .modalWindow2 {
+                             /* モーダルウインドを中心に表示 */
+  position      : absolute;
+  top           : 50%;
+  left          : 50%;
+  transform     : translate(-50%, -50%);
+  z-index       : 11;
+           /* ↓モーダルウインドウの見た目：変更してください */
+  width         : 300px;
+  min-height    : 220px;
+  background    : #fff;
+  border        : 3px solid #35557f;
+  border-radius : 10px;
+  font-size     : 16pt;
+  text-align    : center;
+}
+
+/* === モーダルウインド：OPEN時のアニメーション============= */
+.modalBgOpen2 .modalWindow2 {
+  animation     : modalOpenAnime 0.3s ease;
+}
+@keyframes modalOpenAnime {                      /* 上→中心 */
+   0% { top : -50% }
+ 100% { top : 50%  }
+}
+
+/* === モーダルウインド：CLOSE時のアニメーション============ */
+.modalBgClose2 .modalWindow2 {
+  animation     : modalCloseAnime 0.3s ease;
+}
+@keyframes modalCloseAnime {                      /* 中心→下 */
+   0% { top : 50%  }
+ 100% { top : 150% }
+}
     </style>
-    <script>
-      function load(func){
-            document.getElementById('interactive').classList.add("center");
-            document.getElementById("modalArea").className = "modalBg";
-      Quagga.init({
-        inputStream: { type : 'LiveStream' },
-          decoder: {
-            readers: [{
-              format: 'ean_reader',
-              config: {}
-            }]
-          }
-        }, (err) => {
-          if(!err) {
-            Quagga.start();
-          }
-        });
-  
-      Quagga.onDetected((result) => {
-        var code = result.codeResult.code;
-        if(code[0]==9&&code.length==10||code[0]==9&&code.length==13){
-        document.getElementById("modalArea").className = "modalNoDisp";
-        Quagga.stop();
-        if(func=="borrow"){
-          borrow(code);
-        }else if(func=="return"){
-          due(code);
-        }
-        }else{}
-      });
-    }
-    function borrow(code){
-      alert(code);
-    }
-    function due(code){
-      alert(code);
-    }
-    </script>
+    <script type="text/javascript" src="https://serratus.github.io/quaggaJS/examples/js/quagga.min.js"></script>
+    <script src="./admin.js"></script>
 </head>
 <body>
   <header id="header">
@@ -107,8 +144,8 @@
   </header>
 <div id="outer">
   <div id="inner">
-    <button class="c-button" onclick="load('borrow')" id="borrow">貸出</button>
-    <button class="c-button" onclick="load('return')" id="return">返却</button>
+    <button class="c-button" onclick="modal('borrowf')" id="borrow">貸出</button>
+    <button class="c-button" onclick="modal('backf')" id="return">返却</button>
 
     <button class="c-button" onclick="location.href='./newer.html'">利用者登録</button>
   </div>
@@ -119,5 +156,16 @@
    <div id="interactive" class="viewport"></div>
   </div>
 </div>   
+
+<div id="confArea" class="modalNoDisp2">
+  <div class="modalWindow2">
+    <label for="how" id="label">ユーザー情報の入力方法</label>
+<select id="select" onchange="load(this.id)">
+  <option value="no" selected>選択してください</option>
+<option value="cam">バーコード読み取り</option>
+<option value="hum">手動入力</option>
+</select>
+  </div>
+</div>
 </body>
 </html>
